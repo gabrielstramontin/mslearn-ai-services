@@ -1,3 +1,5 @@
+# First, install the Text Analytics SDK package: [pip install azure-ai-textanalytics==5.3.0]
+
 from dotenv import load_dotenv
 import os
 from azure.core.credentials import AzureKeyCredential
@@ -8,12 +10,12 @@ def main():
     global ai_key
 
     try:
-        # Get Configuration Settings
+        # Get Configuration Settings:
         load_dotenv()
         ai_endpoint = os.getenv('AI_SERVICE_ENDPOINT')
         ai_key = os.getenv('AI_SERVICE_KEY')
 
-        # Get user input (until they enter "quit")
+        # Get user input (until they enter "quit"):
         userText =''
         while userText.lower() != 'quit':
             userText = input('\nEnter some text ("quit" to stop)\n')
@@ -26,14 +28,15 @@ def main():
 
 def GetLanguage(text):
 
-    # Create client using endpoint and key
+    # Create client using Endpoint and Key:
     credential = AzureKeyCredential(ai_key)
     client = TextAnalyticsClient(endpoint=ai_endpoint, credential=credential)
 
-    # Call the service to get the detected language
+    # Call the service to get the detected language:
     detectedLanguage = client.detect_language(documents = [text])[0]
     return detectedLanguage.primary_language.name
 
-
 if __name__ == "__main__":
     main()
+
+# At the end, in the integrated terminal, enter the following command to test and run the program: [python sdk-client.py]
